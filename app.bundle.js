@@ -15105,6 +15105,7 @@ fetchAndWritemd('test-files/basic-md.md')
 fetchAndWritemd('test-files/js-in-md.md')
 fetchAndWritemd('test-files/yaml-fm1.md')
 fetchAndWritemd('test-files/yaml-fm2.md')
+fetchAndWritemd('test-files/generating-hexagons-with-svg-fm2.md')
 fetchAndWritemd('test-files/generating-hexagons-with-svg.md')
 
 /***/ })
