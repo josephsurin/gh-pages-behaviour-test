@@ -15090,11 +15090,20 @@ const frontmatter = __webpack_require__(/*! front-matter */ "./node_modules/fron
 const marked = __webpack_require__(/*! marked */ "./node_modules/marked/lib/marked.js")
 
 function fetchAndWritemd(mdFilePath) {
-	fetch(mdFilePath).then(x => x.text())
+	var mddiv = document.createElement('div') 
+
+	fetch(mdFilePath).then(x => {
+		if(!x.ok) {
+			mddiv.innerHTML = `${mdFilePath} DID NOT LOAD [${x.status} : ${x.statusText}] <hr/>`
+		} else {
+			return x.text()
+		}
+	})
 		.then(rawMD => {
-			var mdfm = frontmatter(rawMD)
-			var mddiv = document.createElement('div') 
-			mddiv.innerHTML = `${mdFilePath} <br/> ${mdfm.frontmatter || 'no front matter'} <br/> ${marked(mdfm.body)} <hr/>`
+			if(rawMD) {
+				var mdfm = frontmatter(rawMD)
+				mddiv.innerHTML = `${mdFilePath} <br/> ${mdfm.frontmatter || 'no front matter'} <br/> ${marked(mdfm.body)} <hr/>`
+			}
 			document
 				.querySelector('#app')
 				.appendChild(mddiv)
@@ -15102,11 +15111,9 @@ function fetchAndWritemd(mdFilePath) {
 }
 
 fetchAndWritemd('test-files/basic-md.md')
-fetchAndWritemd('test-files/js-in-md.md')
 fetchAndWritemd('test-files/yaml-fm1.md')
 fetchAndWritemd('test-files/yaml-fm2.md')
-fetchAndWritemd('test-files/generating-hexagons-with-svg-fm2.md')
-fetchAndWritemd('test-files/generating-hexagons-with-svg.md')
+fetchAndWritemd('test-files/yaml-fm1.notmd')
 
 /***/ })
 
